@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f5b47">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Baki">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Baki – make your allowance last the month</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;600&display=swap">
+<style>
+:root{--bg:#f2f6f0;--surf:#fff;--ink:#16241f;--mute:#566860;--line:#d5e0d6;--pan:#0f5b47;--pan-ink:#fff;--sun:#ffc93c;--sun-ink:#3a2c00;--bad:#b3341a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1714;--surf:#16231f;--ink:#e8f1ec;--mute:#9fb3aa;--line:#264038;--pan:#5fd1a8;--pan-ink:#08231a;--bad:#ff8a6b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1714;--surf:#16231f;--ink:#e8f1ec;--mute:#9fb3aa;--line:#264038;--pan:#5fd1a8;--pan-ink:#08231a;--bad:#ff8a6b;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 Figtree,system-ui,-apple-system,"Segoe UI",sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",Figtree,system-ui,sans-serif;line-height:1.08;margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+.logo{font:800 28px "Bricolage Grotesque",sans-serif;color:var(--pan);letter-spacing:-.02em}
+header span{color:var(--mute);font-size:14px}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:center;padding:20px 0 56px}
+.hero h1{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:-.025em}
+.hero p{color:var(--mute);max-width:46ch;margin:18px 0 0;font-size:18px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:18px;padding:22px}
+.meter label,.form label{display:block;font-size:14px;color:var(--mute);margin-bottom:4px}
+input,select,button{font:inherit;color:inherit}
+input,select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.big{font:800 clamp(44px,9vw,68px)/1 "Bricolage Grotesque",sans-serif;color:var(--pan);letter-spacing:-.03em;margin:14px 0 2px}
+.sub{color:var(--mute);font-size:14px}
+.bars{margin:18px 0 8px;display:grid;gap:10px}
+.bar{height:12px;background:var(--bg);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar i{display:block;height:100%;width:0;border-radius:99px;transition:width .6s ease}
+.b1 i{background:var(--pan)}.b2 i{background:var(--sun)}
+.bl{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-bottom:4px}
+.status{font-weight:600;margin-top:12px}
+.status.over{color:var(--bad)}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;font-size:14px}
+.facts b{display:block;font:800 20px "Bricolage Grotesque",sans-serif}
+section{padding:36px 0;border-top:1px solid var(--line)}
+section>h2{font-size:clamp(26px,4vw,36px);margin-bottom:6px}
+section>p.lead{color:var(--mute);margin:0 0 22px;max-width:60ch}
+.two{display:grid;grid-template-columns:1fr 1.2fr;gap:24px}
+.form{display:grid;gap:12px}
+.btn{background:var(--pan);color:var(--pan-ink);border:0;border-radius:10px;padding:12px 16px;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.list li:last-child{border:0}
+.list small{color:var(--mute);display:block}
+.x{background:none;border:0;color:var(--mute);cursor:pointer;font-size:20px;line-height:1;padding:4px 8px}
+.empty{color:var(--mute);padding:8px 0}
+.lvl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.lvl h3{font-size:26px}
+.chip{display:inline-block;background:var(--sun);color:var(--sun-ink);border-radius:99px;padding:3px 12px;font-size:14px;font-weight:600}
+.ch{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.ch:last-child{border:0}
+.ch input{width:20px;height:20px;margin-top:3px;accent-color:var(--pan);flex:none}
+.ch small{color:var(--mute);display:block}
+.ch>span:first-of-type{flex:1}.dots{display:flex;gap:4px;align-items:center;margin-top:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--pan)}.k{font-size:13px;color:var(--mute);min-width:26px;text-align:right;margin-top:3px}
+textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);font:inherit;color:inherit;resize:vertical}textarea:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.filters button{border:1px solid var(--line);background:var(--surf);border-radius:99px;padding:7px 15px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--pan);color:var(--pan-ink);border-color:var(--pan)}
+.deals{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.deal h3{font-size:20px;margin-bottom:6px}
+.deal p{margin:0 0 10px;color:var(--mute);font-size:15px}
+.deal .tag{font-size:13px;color:var(--pan);font-weight:600}
+footer{padding:28px 0 40px;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
+@media (max-width:760px){.hero,.two{grid-template-columns:1fr}.hero{padding-bottom:36px}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">baki</div><span>Student money, Malaysia</span></header>
+
+<div class="hero">
+  <div>
+    <h1>Make your allowance last until the last day of the month.</h1>
+    <p>Baki tells you what you can spend today, turns saving into a game you can win, and lists student deals worth using.</p>
+  </div>
+  <div class="card meter" aria-live="polite">
+    <label for="allow">Monthly allowance and income (RM)</label>
+    <input id="allow" type="number" min="0" step="10" inputmode="decimal">
+    <div class="big" id="perDay">RM 0.00</div>
+    <div class="sub">safe to spend per day for the rest of this month</div>
+    <div class="bars">
+      <div><div class="bl"><span>Month gone</span><span id="pm"></span></div><div class="bar b2"><i id="bm"></i></div></div>
+      <div><div class="bl"><span>Allowance used</span><span id="pu"></span></div><div class="bar b1"><i id="bu"></i></div></div>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="facts"><div><b id="fs">0</b>spent</div><div><b id="fr">0</b>left</div><div><b id="fd">0</b>days left</div></div>
+  </div>
+</div>
+
+<section id="log">
+  <h2>Log what you spend</h2>
+  <p class="lead">It takes five seconds. Every entry earns 10 XP, and logging daily builds your streak.</p>
+  <div class="two">
+    <form class="card form" id="f">
+      <div><label for="amt">Amount (RM)</label><input id="amt" type="number" min="0.01" step="0.01" inputmode="decimal" required></div>
+      <div><label for="cat">Category</label>
+        <select id="cat"><option>Food</option><option>Transport</option><option>Study</option><option>Fun</option><option>Bills</option><option>Other</option></select></div>
+      <div><label for="note">Note (optional)</label><input id="note" maxlength="40" placeholder="Nasi lemak, Grab, printing…"></div>
+      <button class="btn" type="submit">Add spending</button>
+    </form>
+    <div class="card"><h3 style="font-size:20px;margin-bottom:6px">Recent spending</h3><ul class="list" id="hist"></ul></div>
+  </div>
+</section>
+
+<section id="import">
+  <h2>Add spending from your bank or e-wallet</h2>
+  <p class="lead">Baki can’t log in to your account, and you should never give a website your banking password. Instead, copy your payment notifications or statement lines, paste them here, and Baki finds the amounts for you to confirm.</p>
+  <div class="two">
+    <div class="card form"><div><label for="paste">Paste transactions, one per line</label><textarea id="paste" rows="7" placeholder="RM12.50 paid to Tealive 03/11/2026&#10;RM8.00 Grab ride&#10;RM25.90 Spotify"></textarea></div><button class="btn" id="parse" type="button">Find spending</button></div>
+    <div class="card" id="found"><div class="empty">Transactions Baki finds will appear here for you to confirm.</div></div>
+  </div>
+</section>
+
+<section id="game">
+  <h2>Level up your saving</h2>
+  <p class="lead">Tick what you did today. Each tick earns 10 XP and grows that habit’s streak. Tomorrow the boxes are empty again, and the dots show your last 7 days.</p>
+  <div class="card">
+    <div class="lvl"><h3 id="lname"></h3><span class="chip" id="streak"></span></div>
+    <div class="bars"><div><div class="bl"><span id="xpl"></span><span id="xpn"></span></div><div class="bar b2"><i id="bx"></i></div></div></div>
+    <div id="chs"></div>
+  </div>
+</section>
+
+<section id="deals">
+  <h2>Student deals</h2>
+  <p class="lead">Show your student status and pay less. Claim a deal, then tick the challenge for bonus XP.</p>
+  <div class="filters" id="flt"></div>
+  <div class="deals" id="dl"></div>
+</section>
+
+<footer>Baki is a prototype. Your data stays in this browser. Deals are examples from public pages and may have changed, so confirm terms with the merchant before you rely on them.</footer>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const rm=n=>'RM '+n.toFixed(2);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S={allow:800,exp:[],xp:0,streak:0,last:'',done:{},days:{}};
+try{const r=localStorage.getItem('baki');if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+S.days=S.days||{};
+const save=()=>{try{localStorage.setItem('baki',JSON.stringify(S))}catch(e){}};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+
+const LEVELS=['Newbie saver','Kopi budgeter','Mamak planner','Bajet boss','Baki legend'];
+const CH=[
+ {id:'pack',t:'Cooked or packed my own meal',d:'Instead of eating out'},
+ {id:'boba',t:'No bubble tea today',d:'Water and teh o kosong count'},
+ {id:'bus',t:'Took public transport or walked',d:'Instead of e-hailing'},
+ {id:'deal',t:'Used a student deal today',d:'Pick one from the list below'}
+];
+function streakOf(id){const ds=S.days[id]||[];const d=new Date();if(!ds.includes(iso(d)))d.setDate(d.getDate()-1);let n=0;while(ds.includes(iso(d))){n++;d.setDate(d.getDate()-1)}return n}
+const DEALS=[
+ {n:'KTM student fares',c:'Transport',p:'Students can get a discounted fare with a student card from KTMB. An annual card fee applies.',t:'Check KTMB for current terms'},
+ {n:'Spotify Premium Student',c:'Tech',p:'A reduced monthly plan for verified students. A 2026 guide lists it at RM7.90 a month.',t:'Verify at checkout'},
+ {n:'ISIC student card',c:'Everything',p:'An international student card with deals in Malaysia and abroad.',t:'Apply with your student ID'},
+ {n:'UNiDAYS',c:'Everything',p:'Free student verification that unlocks brand discounts at many online and in-store shops.',t:'Sign up with your university email'},
+ {n:'Hotlink student postpaid',c:'Phone',p:'Past offers took RM10 off the monthly bill for tertiary students. Ask what applies now.',t:'Ask at a Maxis store'},
+ {n:'Your campus café',c:'Food',p:'Many campus food stalls give student prices or meal sets. Ask at the counter and log what you save.',t:'Ask in person'}
+];
+let flt='All';
+
+function render(){
+  const now=new Date(),dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(),day=now.getDate(),left=dim-day+1;
+  const mk=iso(now).slice(0,7);
+  const mine=S.exp.filter(e=>e.date.startsWith(mk));
+  const spent=mine.reduce((a,e)=>a+e.amt,0),rem=S.allow-spent;
+  const per=rem>0?rem/left:0,el=day/dim,used=S.allow>0?Math.min(spent/S.allow,1):0;
+  $('#allow').value=S.allow;
+  $('#perDay').textContent=rm(per);
+  $('#pm').textContent=Math.round(el*100)+'%';$('#pu').textContent=Math.round((S.allow>0?spent/S.allow:0)*100)+'%';
+  $('#bm').style.width=el*100+'%';$('#bu').style.width=used*100+'%';
+  const st=$('#status');
+  if(rem<=0){st.textContent='Allowance used up. Hold off on extras until your next top-up.';st.className='status over'}
+  else if(spent<=S.allow*el){st.textContent='On track. You are spending slower than the month is passing.';st.className='status'}
+  else{st.textContent='Ahead of pace by '+rm(spent-S.allow*el)+'. Spend a little less today to catch up.';st.className='status over'}
+  $('#fs').textContent=rm(spent);$('#fr').textContent=rm(Math.max(rem,0));$('#fd').textContent=left;
+  $('#hist').innerHTML=mine.length?mine.slice(-6).reverse().map(e=>`<li><div><b>${rm(e.amt)}</b> ${esc(e.cat)}<small>${esc(e.note||'')} ${e.date.slice(5)}</small></div><button class="x" data-id="${e.id}" aria-label="Delete entry">×</button></li>`).join(''):'<div class="empty">Nothing logged yet this month. Add your first spending.</div>';
+  const xp=S.xp,lv=Math.min(Math.floor(xp/100),4);
+  $('#lname').textContent='Level '+(lv+1)+': '+LEVELS[lv];
+  $('#streak').textContent=S.streak+(S.streak===1?' day streak':' day streak');
+  $('#xpl').textContent=xp+' XP';$('#xpn').textContent=lv<4?(100-xp%100)+' XP to next level':'Top level reached';
+  $('#bx').style.width=(lv<4?xp%100:100)+'%';
+  const td=iso(now);
+  $('#chs').innerHTML=CH.map(c=>{const ds=S.days[c.id]||[],on=ds.includes(td);const dots=[...Array(7)].map((_,i)=>{const d=new Date(now);d.setDate(now.getDate()-6+i);return `<i class="${ds.includes(iso(d))?'on':''}"></i>`}).join('');return `<label class="ch"><input type="checkbox" data-c="${c.id}" ${on?'checked':''}><span><b>${c.t}</b> <span class="chip">+10 XP</span><small>${c.d}</small></span><span class="dots" title="Last 7 days">${dots}</span><span class="k">${streakOf(c.id)}d</span></label>`}).join('');
+}
+$('#allow').addEventListener('input',e=>{S.allow=Math.max(parseFloat(e.target.value)||0,0);save();render();$('#allow').focus()});
+$('#f').addEventListener('submit',e=>{
+  e.preventDefault();const amt=parseFloat($('#amt').value);if(!(amt>0))return;
+  const t=new Date(),today=iso(t),y=new Date(t);y.setDate(t.getDate()-1);
+  S.exp.push({id:Date.now(),date:today,amt,cat:$('#cat').value,note:$('#note').value.trim()});
+  S.xp+=10;
+  if(S.last!==today){S.streak=S.last===iso(y)?S.streak+1:1;S.last=today}
+  if(S.streak>=7&&!S.done.streak){S.done.streak=1;S.xp+=50}
+  save();$('#amt').value='';$('#note').value='';render();$('#amt').focus();
+});
+$('#hist').addEventListener('click',e=>{const b=e.target.closest('.x');if(!b)return;S.exp=S.exp.filter(x=>x.id!=b.dataset.id);S.xp=Math.max(S.xp-10,0);save();render()});
+$('#chs').addEventListener('change',e=>{const c=e.target.dataset.c;if(!c)return;const td=iso(new Date()),ds=S.days[c]||[];if(e.target.checked){if(!ds.includes(td)){ds.push(td);S.xp+=10}}else{const i=ds.indexOf(td);if(i>-1){ds.splice(i,1);S.xp=Math.max(S.xp-10,0)}}S.days[c]=ds;save();render()});
+function deals(){
+  const cats=['All',...new Set(DEALS.map(d=>d.c))];
+  $('#flt').innerHTML=cats.map(c=>`<button aria-pressed="${c===flt}" data-f="${c}">${c}</button>`).join('');
+  $('#dl').innerHTML=DEALS.filter(d=>flt==='All'||d.c===flt).map(d=>`<div class="card deal"><h3>${d.n}</h3><p>${d.p}</p><span class="tag">${d.t}</span></div>`).join('');
+}
+$('#flt').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;flt=b.dataset.f;deals()});
+let found=[];
+const CATS=[['Transport',/grab|mrt|lrt|ktm|rapid|petrol|petronas|shell|toll|parking|touch ?n ?go/i],['Food',/kfc|mcd|mamak|caf[eé]|restoran|restaurant|kopitiam|food|coffee|tealive|starbucks|zus|boba|nasi|mart|mixue/i],['Study',/print|book|stationery|popular|exam|tuition/i],['Fun',/netflix|spotify|cinema|tgv|gsc|game|steam/i],['Bills',/tnb|unifi|maxis|celcom|digi|hotlink|rent|water|bill/i]];
+function showFound(){
+  $('#found').innerHTML=found.length?`<ul class="list">${found.map((f,i)=>`<li><label class="ch" style="border:0;padding:0"><input type="checkbox" data-i="${i}" ${f.dup?'disabled':'checked'}><span><b>${rm(f.amt)}</b> ${esc(f.cat)}<small>${esc(f.note)} ${f.date}${f.dup?' (already added)':''}</small></span></label></li>`).join('')}</ul><button class="btn" id="addf" type="button" style="margin-top:12px">Add selected</button>`:'<div class="empty">No spending found. Each line needs an amount like RM12.50. Credits, refunds and top-ups are skipped.</div>';
+}
+$('#parse').addEventListener('click',()=>{
+  const skip=/received|credit|top ?up|salary|refund|cashback/i;
+  found=$('#paste').value.split(/\n+/).map(l=>l.trim()).filter(Boolean).map(l=>{
+    const m=l.match(/RM\s?([\d,]+(?:\.\d{1,2})?)/i);if(!m||skip.test(l))return null;
+    const amt=parseFloat(m[1].replace(/,/g,''));if(!(amt>0))return null;
+    const dr=/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/,dm=l.match(dr);let date=iso(new Date());
+    if(dm){const d=new Date(+dm[3],+dm[2]-1,+dm[1]);if(!isNaN(d))date=iso(d)}
+    const note=l.replace(m[0],'').replace(dr,'').replace(/\s+/g,' ').trim().slice(0,40);
+    const cat=(CATS.find(c=>c[1].test(l))||[])[0]||'Other';
+    return {amt,date,note,cat,dup:S.exp.some(x=>x.amt===amt&&x.date===date&&x.note===note)};
+  }).filter(Boolean);
+  showFound();
+});
+$('#found').addEventListener('click',e=>{
+  if(e.target.id!=='addf')return;
+  const ids=[...document.querySelectorAll('#found input:checked')].map(i=>+i.dataset.i);
+  ids.forEach((i,k)=>{const f=found[i];S.exp.push({id:Date.now()+k,date:f.date,amt:f.amt,cat:f.cat,note:f.note})});
+  save();found=[];$('#paste').value='';
+  $('#found').innerHTML=`<div class="empty">Added ${ids.length} transaction${ids.length===1?'':'s'} to your spending.</div>`;
+  render();
+});
+render();deals();
+</script>
+<script>
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}
+</script>
+</body>
+</html>
